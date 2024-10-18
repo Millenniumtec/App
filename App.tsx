@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Text, TouchableOpacity, StyleSheet, SafeAreaView, StatusBar, BackHandler } from 'react-native';
+import { View, Image, Text, TouchableOpacity, StyleSheet, SafeAreaView, StatusBar, BackHandler, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 export default function Login() {
   const [currentUrl, setCurrentUrl] = useState(null); // Estado para armazenar a URL atual
+  const [loading, setLoading] = useState(false); // Estado para indicar carregamento
 
   // Use efeito para lidar com o botão de "voltar" do dispositivo
   useEffect(() => {
@@ -25,17 +26,36 @@ export default function Login() {
   const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#022238'}}>
       <StatusBar hidden={true} />
 
       {currentUrl ? (
-        <WebView
-          source={{ uri: currentUrl }} // Carrega a URL atual
-          style={{ flex: 1 }}
-          javaScriptEnabled={true} // Permite JavaScript
-          userAgent={userAgent} // Define o User-Agent personalizado
-          onError={() => setCurrentUrl(null)} // Lida com erros de navegação, retornando à tela inicial
-        />
+        <>
+          {loading && (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#005691" />
+            </View>
+          )}
+
+          <WebView
+            source={{ uri: currentUrl }} // Carrega a URL atual
+            style={{ flex: 1 }}
+            javaScriptEnabled={true} // Permite JavaScript
+            userAgent={userAgent} // Define o User-Agent personalizado
+            onLoadStart={() => setLoading(true)} // Inicia o indicador de carregamento
+            onLoadEnd={() => setLoading(false)} // Termina o indicador de carregamento
+            onError={() => setCurrentUrl(null)} // Lida com erros de navegação, retornando à tela inicial
+            onShouldStartLoadWithRequest={(request) => {
+              // Intercepta links externos e pode ser usado para abrir em navegador externo
+              if (request.url.startsWith('https://') && request.url.includes('milleniumproducoes.com')) {
+                return true; // Permite navegação
+              } else {
+                // Aqui você pode tratar links externos se necessário
+                return false; // Bloqueia navegação fora do domínio permitido
+              }
+            }}
+          />
+        </>
       ) : (
         <View style={styles.container}>
           <Image
@@ -50,7 +70,6 @@ export default function Login() {
             >
               <Text style={styles.textoBotao}>Plataforma</Text>
             </TouchableOpacity>
-
           </View>
         </View>
       )}
@@ -62,6 +81,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#022238',
+    
     alignItems: 'center',
   },
 
@@ -86,4 +106,13 @@ const styles = StyleSheet.create({
     padding: 20,
     fontSize: 18,
   },
+
+  loadingContainer: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginLeft: -50,
+    marginTop: -50,
+    zIndex: 1
+  }
 });
