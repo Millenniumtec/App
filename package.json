@@ -19,6 +19,9 @@
     "@babel/core": "^7.24.0",
     "@types/react": "~18.2.79",
     "@types/react-native": "^0.72.8",
+    "metro": "^0.81.0",
+    "metro-config": "^0.81.0",
+    "metro-core": "^0.81.0",
     "typescript": "~5.3.3"
   },
   "private": true

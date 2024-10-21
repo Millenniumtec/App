@@ -13,11 +13,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.example.webmillennium", 
+      "bundleIdentifier": "com.example.webmillennium",
       "buildNumber": "1.0.0",
       "infoPlist": {
-        "UIStatusBarHidden": true,  
-        "UIViewControllerBasedStatusBarAppearance": false  
+        "UIStatusBarHidden": true,
+        "UIViewControllerBasedStatusBarAppearance": false
       }
     },
     "android": {
@@ -25,11 +25,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.example.webmillennium", 
+      "package": "com.example.webmillennium",
       "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f71762c4-dcd0-4ee9-9f81-17082582535c"
+      }
     }
   }
 }
