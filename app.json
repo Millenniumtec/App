@@ -26,6 +26,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.example.webmillennium",
+      "permissions": [],
       "versionCode": 1
     },
     "web": {
@@ -35,6 +36,7 @@
       "eas": {
         "projectId": "f71762c4-dcd0-4ee9-9f81-17082582535c"
       }
-    }
+    },
+    "owner": "millenniumtech"
   }
 }
